@@ -8,6 +8,13 @@
     "prepare": "husky",
     "start": "node app.js"
   },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css,md}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sadwipe/The-Tea-Shelf.git"
@@ -15,7 +22,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/sadwipe/The-Tea-Shelf/issues"
   },
