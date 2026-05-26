@@ -1,0 +1,37 @@
+{
+  "name": "tea-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write .",
+    "prepare": "husky",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadwipe/The-Tea-Shelf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sadwipe/The-Tea-Shelf/issues"
+  },
+  "homepage": "https://github.com/sadwipe/The-Tea-Shelf#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.3"
+  }
+}
