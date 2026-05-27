@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "node --watch app.js",
     "format": "prettier --write .",
     "prepare": "husky",
     "start": "node app.js"
