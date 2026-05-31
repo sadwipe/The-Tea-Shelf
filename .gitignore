@@ -24,3 +24,4 @@ run
 *.sln
 *.sw?
 .env
+ideas.txt
