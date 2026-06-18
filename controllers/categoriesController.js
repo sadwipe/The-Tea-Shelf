@@ -1,5 +1,5 @@
 function getCategories(req, res) {
-  res.send('Get Categories');
+  res.render('categories');
 }
 
 function postCategories(req, res) {

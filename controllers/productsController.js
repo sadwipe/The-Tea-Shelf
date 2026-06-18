@@ -1,5 +1,5 @@
 function getProducts(req, res) {
-  res.send('Get products!');
+  res.render('products');
 }
 
 function postProducts(req, res) {
