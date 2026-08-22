@@ -7,7 +7,8 @@
     "dev": "node --watch app.js",
     "format": "prettier --write .",
     "prepare": "husky",
-    "start": "node app.js"
+    "start": "node app.js",
+    "seed": "node db/populatedb.js"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx,json,css,md}": [
