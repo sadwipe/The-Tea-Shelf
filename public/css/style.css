@@ -188,15 +188,17 @@ main {
 }
 
 .products-card {
-  background:
+  background-image:
     linear-gradient(rgba(255, 238, 238, 0.9), rgba(160, 255, 166, 0.9)),
     url(../images/categories-tea.jpg);
+  transition: background-size 0.4s ease;
 }
 
 .categories-card {
-  background:
+  background-image:
     linear-gradient(rgba(194, 255, 197, 0.7), rgba(255, 255, 186, 0.9)),
     url(../images/categories-tea.jpg);
+  transition: background-size 0.4s ease;
 }
 
 /* Hover effect targets the background-size */

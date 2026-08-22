@@ -7,12 +7,16 @@ import indexRouter from './routes/indexRouter.js';
 import categoriesRouter from './routes/categoriesRouter.js';
 import productsRouter from './routes/productsRouter.js';
 
+// returns the absolute path of the "app.js" file
 const __filename = fileURLToPath(import.meta.url);
+// returns the "parent" directory of the app.js file (root directory)
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// used for parsing forms
 app.use(express.urlencoded({ extended: true }));
+// used to parse static files (fonts, css files)
 app.use(express.static('public'));
 
 app.set('views', path.join(__dirname, 'views'));
