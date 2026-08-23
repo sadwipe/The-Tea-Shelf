@@ -1,0 +1,9 @@
+/* Footer */
+footer {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--main-color);
+  padding: 20px 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}

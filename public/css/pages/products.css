@@ -1,0 +1,30 @@
+/* Products page */
+.products-header {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.products-header > h1 {
+  font-size: 2.5rem;
+}
+
+.products-header > a {
+  font-size: var(--header-font-size);
+  background-color: var(--header-button-bg);
+  color: var(--header-button-color);
+  border: none;
+  border-radius: 8px;
+  border-width: 1px;
+  padding: 10px 15px;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  text-decoration: none;
+}
+
+.products-header > a:hover {
+  background-color: rgb(30, 137, 58);
+  color: white;
+}
