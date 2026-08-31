@@ -1,4 +1,4 @@
 import { Pool } from 'pg';
-import db from './config.js';
+import dbConfig from './config.js';
 
-export default new Pool({ ...db });
+export default new Pool({ ...dbConfig });

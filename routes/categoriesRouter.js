@@ -6,6 +6,7 @@ const categoriesRouter = express.Router();
 
 categoriesRouter.get('/', categoriesController.getCategories);
 
-categoriesRouter.post('/', categoriesController.postCategories);
+categoriesRouter.get('/new', categoriesController.getNewCategoriesForm);
+categoriesRouter.post('/new', categoriesController.postNewCategory);
 
 export default categoriesRouter;

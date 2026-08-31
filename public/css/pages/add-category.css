@@ -1,0 +1,50 @@
+#add-category {
+  margin-top: 30px;
+  padding: 20px 30px;
+  background-color: #78b76d2d;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px;
+}
+
+.add-category-header {
+  font-size: 2.5rem;
+}
+
+#add-category > input {
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  font-size: 1.25rem;
+}
+
+#add-category > input[type='text'] {
+  margin-bottom: 10px;
+}
+
+#add-category > input[type='color'] {
+  height: 40px;
+}
+
+#add-category > button {
+  margin-top: 1rem;
+  font-size: var(--header-font-size);
+  background-color: var(--header-button-bg);
+  color: var(--header-button-color);
+  border: none;
+  border-radius: 8px;
+  border-width: 1px;
+  padding: 10px 15px;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+#add-category > button:hover {
+  background-color: rgb(30, 137, 58);
+  color: white;
+}

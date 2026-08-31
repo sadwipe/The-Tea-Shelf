@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<main>
+  <div class="container">
+    <h1 class="add-category-header">add a category</h1>
+    <form id="add-category" action="/categories/new" method="POST">
+      <label for="category">Category:</label>
+      <input name="category" id="category" type="text" required >
+      <label for="color">Label Color:</label>
+      <input type="color" name="color" id="color">
+      <% if(locals.errors.length !== 0) { %>
+        <ul>
+          <% locals.errors.map(error => { %>
+            <li style="color: red;"><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
