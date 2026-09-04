@@ -1,6 +1,8 @@
+import db from '../db/queries.js';
+
 // GET /products
 function getProducts(req, res) {
-  res.render('products');
+  res.render('pages/products');
 }
 
 // POST /products
@@ -9,8 +11,10 @@ function postProducts(req, res) {
 }
 
 // GET /products/new
-function getNewProductsForm(req, res) {
-  res.render('add-product');
+async function getNewProductsForm(req, res) {
+  const categories = await db.getCategories();
+
+  res.render('pages/add-product', { categories });
 }
 
 // POST /products/new

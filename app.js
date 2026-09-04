@@ -28,6 +28,11 @@ app.use('/categories', categoriesRouter);
 app.use('/products', productsRouter);
 app.use('/search', searchRouter);
 
+app.use((err, req, res, _next) => {
+  console.error(err.stack);
+  res.status(500).send('Error 500');
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

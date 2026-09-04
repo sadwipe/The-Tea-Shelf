@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head', { title: "Add Product", pageCss: '/css/pages/add-product.css' }) %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
+    <div class="container">
+      <h1 class="add-product-header">add a product</h1>
+      <form id="add-product" action="/products/new" method="POST">
+        <label for="name">Name:</label>
+        <input name="name" id="name" type="text" required minlength="3" maxlength="30">
+        <label for="price">Price (per 100 grams):</label>
+        <input name="price" id="price" type="number" required min="1">
+        <label for="stock">Stock (in grams):</label>
+        <input name="stock" id="stock" type="number" required min="1">
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+          <% categories.forEach(category => { %>
+            <option value="<%= category.name %>"><%= category.name %></option>
+          <% }) %>
+        </select>
+        <label for="image">Image:</label>
+        <input type="file" name="src" accept="image/png, image/jpeg, image/svg+xml">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>

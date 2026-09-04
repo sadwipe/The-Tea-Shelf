@@ -1,6 +1,11 @@
-<%- include('partials/header') %>
-
-<main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head', { title: "Add Category", pageCss: '/css/pages/add-category.css' }) %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
   <div class="container">
     <h1 class="add-category-header">add a category</h1>
     <form id="add-category" action="/categories/new" method="POST">
@@ -19,5 +24,6 @@
     </form>
   </div>
 </main>
-
-<%- include('partials/footer') %>
+  <%- include('../partials/footer') %>
+</body>
+</html>

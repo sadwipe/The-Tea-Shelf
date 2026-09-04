@@ -3,7 +3,7 @@ import globals from 'globals';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '**/*.css']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [js.configs.recommended],
@@ -23,7 +23,7 @@ export default defineConfig([
       'no-unused-vars': [
         'error',
         {
-          argsIgnorePattern: '^_',
+          argsIgnorePattern: '^(next|_)',
           varsIgnorePattern: '^_',
         },
       ],
