@@ -1,17 +1,22 @@
-import db from '../db/queries.js';
-
 import { body, validationResult, matchedData } from 'express-validator';
+
+import db from '../db/queries.js';
+// import { getContrastColor } from '../utils/utils.js'
 
 // GET /categories
 async function getCategories(req, res) {
   const categories = await db.getCategories();
 
+  console.log(categories);
+
   if (categories.length === 0) {
     return res.render('pages/categories', {
       categories,
-      info: 'There are no categories.',
+      info: 'There are no categories available.',
     });
   }
+
+  // const contrastColor = getContrastColor()
 
   res.render('pages/categories', { categories });
 }

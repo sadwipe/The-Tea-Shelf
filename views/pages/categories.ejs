@@ -13,6 +13,14 @@
         <a href="/categories/new">Add a category</a>
       </div>
       <div class="main-content">
+        <% if(typeof info !== 'undefined') { %>
+          <p style="text-align: center;"><%= info %></p>
+        <% } %>
+        <div class="categories-list">
+          <% categories.forEach(category => { %>
+            <a style='background-color: #<%= category.color %>;' class="category-card" href="/categories"><%= category.name %></a>
+          <% }) %>
+        </div>
       </div>
     </div>
   </main>

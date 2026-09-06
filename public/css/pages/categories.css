@@ -3,6 +3,7 @@
   display: flex;
   gap: 15px;
   align-items: center;
+  margin-bottom: 40px;
 }
 
 .categories-header > h1 {
@@ -27,4 +28,25 @@
 .categories-header > a:hover {
   background-color: rgb(30, 137, 58);
   color: white;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.categories-list > a {
+  padding: 10px;
+  height: 150px;
+  width: 200px;
+  font-size: 2rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.categories-list > a:hover {
+  transform: scale(1.05);
 }
