@@ -1,7 +1,7 @@
 import { body, validationResult, matchedData } from 'express-validator';
 
 import db from '../db/queries.js';
-// import { getContrastColor } from '../utils/utils.js'
+import { getContrastColor } from '../utils/utils.js';
 
 // GET /categories
 async function getCategories(req, res) {
@@ -16,9 +16,7 @@ async function getCategories(req, res) {
     });
   }
 
-  // const contrastColor = getContrastColor()
-
-  res.render('pages/categories', { categories });
+  res.render('pages/categories', { categories, getContrastColor });
 }
 
 // GET /categories/new
@@ -26,13 +24,16 @@ function getNewCategoriesForm(req, res) {
   res.render('pages/add-category', { errors: [] });
 }
 
+// Validate POST /categories/new
 const validateCategory = [
   body('category')
     .trim()
     .matches(/^[A-Za-z ]+$/)
-    .withMessage('The category must only contain letters and spaces.')
+    .withMessage('The category name must only contain letters and spaces.')
     .isLength({ min: 3, max: 30 })
-    .withMessage('The category must be between 3 and 30 characters.'),
+    .withMessage(
+      'The category name length must be between 3 and 30 characters.',
+    ),
 ];
 
 // POST /categories/new

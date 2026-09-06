@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+S<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('../partials/head', { title: "Add Product", pageCss: '/css/pages/add-product.css' }) %>
@@ -8,7 +8,7 @@
   <main>
     <div class="container">
       <h1 class="add-product-header">add a product</h1>
-      <form id="add-product" action="/products/new" method="POST">
+      <form id="add-product" action="/products/new" method="POST" enctype="multipart/form-data">
         <label for="name">Name:</label>
         <input name="name" id="name" type="text" required minlength="3" maxlength="30">
         <label for="price">Price (per 100 grams):</label>
@@ -19,10 +19,17 @@
         <select name="category" id="category">
           <% categories.forEach(category => { %>
             <option value="<%= category.name %>"><%= category.name %></option>
-          <% }) %>
+          <% }) %>\
         </select>
         <label for="image">Image:</label>
         <input type="file" name="src" accept="image/png, image/jpeg, image/svg+xml">
+        <% if(locals.errors && locals.errors.length !== 0) { %>
+        <ul>
+          <% locals.errors.map(error => { %>
+            <li style="color: red;"><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
         <button type="submit">Submit</button>
       </form>
     </div>

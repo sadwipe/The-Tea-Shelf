@@ -25,3 +25,5 @@ run
 *.sw?
 .env
 ideas.txt
+public/uploads/*
+!public/uploads/.gitkeep 
