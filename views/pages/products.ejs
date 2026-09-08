@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('../partials/head', { title: "Products", pageCss: '/css/pages/products.css' }) %>
+  <%- include('../partials/head', { title: "Products", pageCss: ['/css/pages/products.css', '/css/sidebar.css'] }) %>
 </head>
 <body>
   <%- include('../partials/header') %>
@@ -11,8 +11,30 @@
         <h1>products</h1>
         <a href="/products/new">Add a product</a>
       </div>
-      <h1>products</h1>
-      <p>Unique content for products goes here</p>
+      <div class="store-content">
+        <%- include('../partials/sidebar') %>
+        <div class="products-container">
+          <% if(products.length !== 0) { %>
+            <% products.forEach(product => { %>
+              <a href="/products/<%= product.id %>">
+                <div class="product-card">
+                  <img src="<%= product.image_url %>" class="product-image" alt="<%= product.name %>">
+                  <div class="card-info">
+                    <div class="name-price">
+                      <p class="card-name"><%= product.name %></p>
+                      <p class="card-price">$<%= Math.round(product.price, 2) %></p>
+                    </div>
+                    <div class="card-quantity">Quantity: <%= product.stock %>g</div>
+                    <div style="background-color: <%= product.backgroundColor %>; color: <%= getContrastColor(product.backgroundColor) %>" class="product-category"><%= product.category %></div>
+                  </div>
+                </div>
+              </a>
+            <% }) %>
+          <% } else { %>
+            <p>There are no products.</p>
+          <% } %>
+        </div>
+      </div>
     </div>
   </main>
   <%- include('../partials/footer') %>

@@ -1,0 +1,40 @@
+<div class="sidebar">
+  <form action="/products" method="GET" id="filter-form">
+    <fieldset>
+      <legend>Sort by price:</legend>
+      <div class="input-container">
+        <input type="radio" name="sort" id="priceAsc" value="priceAsc">
+        <label for="priceAsc">Ascending</label>
+      </div>
+      <div class="input-container">
+        <input type="radio" name="sort" id="priceDesc" value="priceDesc">
+        <label for="priceDesc">Descending</label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Sort by name:</legend>
+      <div class="input-container">
+        <input type="radio" name="sort" id="nameAsc" value="nameAsc">
+        <label for="nameAsc">Ascending</label>
+      </div>
+      <div class="input-container">
+        <input type="radio" name="sort" id="nameDesc" value="nameDesc">
+        <label for="nameDesc">Descending</label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Filter by category:</legend>
+      <div class="categories-filter">
+        <% if(categories.length !== 0) { %>
+          <% categories.forEach(category => { %>
+            <div class="input-container-category">
+              <input type="checkbox" name="category" id="<%= category.name %>" value="<%= category.name %>">
+              <label style="background-color: #<%= category.color %>; color: <%= getContrastColor(category.color) %>" for="<%= category.name %>"><%= category.name %></label>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </fieldset>
+    <button type="submit">Apply Filters</button>
+  </form>
+</div>

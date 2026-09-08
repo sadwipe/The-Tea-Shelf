@@ -24,6 +24,15 @@
   font-size: 1.25rem;
 }
 
+#add-product > textarea {
+  resize: none;
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  font-size: 1.25rem;
+}
+
 #add-product > input[type='file'] {
   font-size: 1rem;
   font-family: var(--main-font);

@@ -2,10 +2,25 @@ import { body, validationResult, matchedData } from 'express-validator';
 
 import db from '../db/queries.js';
 import { upload } from '../middleware/upload.js';
+import { getContrastColor } from '../utils/utils.js';
 
 // GET /products
-function getProducts(req, res) {
-  res.render('pages/products');
+async function getProducts(req, res) {
+  const categories = await db.getCategories();
+  const data = await db.getProducts();
+  const products = await Promise.all(
+    data.map(async (value) => ({
+      ...value,
+      category: await db.getProductCategory(value.id),
+      backgroundColor: await db.getProductColor(value.id),
+    })),
+  );
+
+  res.render('pages/products', {
+    products,
+    categories,
+    getContrastColor,
+  });
 }
 
 // POST /products
@@ -40,6 +55,7 @@ const validateProduct = [
     .withMessage('The price must be between 1 and 100000.'),
 ];
 
+// Wrapper for catching errors thrown by multer
 function catchMulterError(req, res, next) {
   upload.single('src')(req, res, async (err) => {
     if (err) {
@@ -83,7 +99,7 @@ const postNewProduct = [
 
     const imageUrl = req.file
       ? `/uploads/${req.file.filename}`
-      : '/images/tea.jpg';
+      : '/images/default-tea.svg';
 
     const product = {
       name,

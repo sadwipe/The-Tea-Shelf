@@ -7,8 +7,6 @@ import { getContrastColor } from '../utils/utils.js';
 async function getCategories(req, res) {
   const categories = await db.getCategories();
 
-  console.log(categories);
-
   if (categories.length === 0) {
     return res.render('pages/categories', {
       categories,

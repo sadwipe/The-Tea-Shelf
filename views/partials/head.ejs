@@ -8,5 +8,10 @@
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/footer.css">
 <% if(typeof pageCss !== 'undefined') { %>
+  <% if(Array.isArray(pageCss)) { %>
+    <% pageCss.forEach(page => { %>
+      <link rel="stylesheet" href="<%= page %>">
+    <% }) %>
+  <% } %>
   <link rel="stylesheet" href="<%= pageCss %>">
 <% } %>
