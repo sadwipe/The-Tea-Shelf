@@ -25,7 +25,7 @@
                       <p class="card-price">$<%= Math.round(product.price, 2) %></p>
                     </div>
                     <div class="card-quantity">Quantity: <%= product.stock %>g</div>
-                    <div style="background-color: <%= product.backgroundColor %>; color: <%= getContrastColor(product.backgroundColor) %>" class="product-category"><%= product.category %></div>
+                    <div style="background-color: #<%= product.backgroundColor %>; color: <%= getContrastColor(product.backgroundColor) %>" class="product-category"><%= product.category %></div>
                   </div>
                 </div>
               </a>

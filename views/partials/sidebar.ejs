@@ -3,38 +3,76 @@
     <fieldset>
       <legend>Sort by price:</legend>
       <div class="input-container">
-        <input type="radio" name="sort" id="priceAsc" value="priceAsc">
+        <input 
+          type="radio" 
+          name="sort" 
+          id="priceAsc" 
+          value="price asc"
+          <%= query.sort === 'price asc' ? 'checked' : '' %>
+        >
         <label for="priceAsc">Ascending</label>
       </div>
       <div class="input-container">
-        <input type="radio" name="sort" id="priceDesc" value="priceDesc">
+        <input 
+          type="radio" 
+          name="sort" 
+          id="priceDesc" 
+          value="price desc"
+          <%= query.sort === 'price desc' ? 'checked' : '' %>
+        >
         <label for="priceDesc">Descending</label>
       </div>
     </fieldset>
     <fieldset>
       <legend>Sort by name:</legend>
       <div class="input-container">
-        <input type="radio" name="sort" id="nameAsc" value="nameAsc">
+        <input 
+          type="radio" 
+          name="sort" 
+          id="nameAsc" 
+          value="name asc"
+          <%= query.sort === 'name asc' ? 'checked' : '' %>
+        >
         <label for="nameAsc">Ascending</label>
       </div>
       <div class="input-container">
-        <input type="radio" name="sort" id="nameDesc" value="nameDesc">
+        <input
+          type="radio"
+          name="sort"
+          id="nameDesc"
+          value="name desc"
+          <%= query.sort === 'name desc' ? 'checked' : '' %>
+        >
         <label for="nameDesc">Descending</label>
       </div>
     </fieldset>
     <fieldset>
       <legend>Filter by category:</legend>
       <div class="categories-filter">
+        <% 
+          const selectedCategories = query.category 
+            ? (Array.isArray(query.category) ? query.category : [query.category]) 
+            : [];
+        %>
         <% if(categories.length !== 0) { %>
-          <% categories.forEach(category => { %>
-            <div class="input-container-category">
-              <input type="checkbox" name="category" id="<%= category.name %>" value="<%= category.name %>">
-              <label style="background-color: #<%= category.color %>; color: <%= getContrastColor(category.color) %>" for="<%= category.name %>"><%= category.name %></label>
-            </div>
-          <% }) %>
+        <% categories.forEach(category => { %>
+        <div class="input-container-category">
+          <input
+            type="checkbox"
+            name="category"
+            id="<%= category.name %>"
+            value="<%= category.name %>"
+            <%= selectedCategories.includes(category.name) ? 'checked' : '' %>
+          >
+          <label style="background-color: #<%= category.color %>; color: <%= getContrastColor(category.color) %>" for="<%= category.name %>"><%= category.name %></label>
+        </div>
+        <% }) %>
         <% } %>
       </div>
     </fieldset>
     <button type="submit">Apply Filters</button>
+  </form>
+  <form action="/products" method="GET" id="reset-form">
+    <button type="submit">Reset Filters</button>
   </form>
 </div>

@@ -6,20 +6,32 @@ import { getContrastColor } from '../utils/utils.js';
 
 // GET /products
 async function getProducts(req, res) {
-  const categories = await db.getCategories();
-  const data = await db.getProducts();
-  const products = await Promise.all(
-    data.map(async (value) => ({
-      ...value,
-      category: await db.getProductCategory(value.id),
-      backgroundColor: await db.getProductColor(value.id),
-    })),
-  );
+  const rawCategories = req.query.category;
+  const filteredCategories = rawCategories
+    ? Array.isArray(rawCategories)
+      ? rawCategories
+      : [rawCategories]
+    : null;
+
+  let sortingCriteria = null;
+  let sortingOrder = null;
+
+  if (req.query.sort) {
+    const [criteria, order] = req.query.sort.split(' ');
+    sortingCriteria = criteria;
+    sortingOrder = order;
+  }
+
+  const [categories, products] = await Promise.all([
+    db.getCategories(),
+    db.getProducts([filteredCategories, sortingCriteria, sortingOrder]),
+  ]);
 
   res.render('pages/products', {
     products,
     categories,
     getContrastColor,
+    query: req.query,
   });
 }
 
@@ -86,7 +98,7 @@ const postNewProduct = [
 
     const { name, price, stock } = matchedData(req);
 
-    const existingProduct = await db.getProduct(name);
+    const existingProduct = await db.getProductByName(name);
 
     if (existingProduct.length !== 0) {
       const categories = await db.getCategories();
@@ -114,9 +126,17 @@ const postNewProduct = [
   },
 ];
 
+async function getProduct(req, res) {
+  const { productId } = req.params;
+  const product = await db.getProductById(productId);
+  console.log(product);
+  res.send('hello');
+}
+
 export default {
   getProducts,
   postProducts,
   getNewProductsForm,
   postNewProduct,
+  getProduct,
 };

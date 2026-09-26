@@ -1,4 +1,4 @@
-S<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('../partials/head', { title: "Add Product", pageCss: '/css/pages/add-product.css' }) %>
@@ -21,7 +21,7 @@ S<!DOCTYPE html>
         <select name="category" id="category">
           <% categories.forEach(category => { %>
             <option value="<%= category.name %>"><%= category.name %></option>
-          <% }) %>\
+          <% }) %>
         </select>
         <label for="image">Image:</label>
         <input type="file" name="src" accept="image/png, image/jpeg, image/svg+xml">

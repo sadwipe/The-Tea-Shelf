@@ -44,3 +44,27 @@ fieldset > legend {
   background-color: rgb(30, 137, 58);
   color: white;
 }
+
+#reset-form {
+  margin-top: 10px;
+}
+
+#reset-form > button {
+  width: fit-content;
+  font-size: var(--header-font-size);
+  background-color: #e5e7eb;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  border-width: 1px;
+  padding: 10px 15px;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+#reset-form > button:hover {
+  background-color: #d1d5db;
+  color: white;
+}

@@ -31,17 +31,40 @@ async function postCategory(category) {
 }
 
 // GET Products
-async function getProducts() {
-  const { rows } = await pool.query('SELECT * FROM products;');
+async function getProducts(query) {
+  const SQL = `
+    SELECT
+      p.*,
+      c.name AS category,
+      c.color AS "backgroundColor"
+    FROM products p
+    LEFT JOIN categories c ON p.category_id = c.id
+    WHERE ($1::text[] IS NULL OR c.name = ANY($1))
+    ORDER BY
+      CASE WHEN $2 = 'price' AND $3 = 'asc' THEN p.price END ASC,
+      CASE WHEN $2 = 'price' AND $3 = 'desc' THEN p.price END DESC,
+      CASE WHEN $2 = 'name' AND $3 = 'asc' THEN p.name END ASC,
+      CASE WHEN $2 = 'name' AND $3 = 'desc' THEN p.name END DESC;
+    ;
+  `;
+
+  const { rows } = await pool.query(SQL, query);
   return rows;
 }
 
-async function getProduct(name) {
+async function getProductByName(name) {
   const { rows } = await pool.query(
     'SELECT * FROM products WHERE name ILIKE $1',
     [name],
   );
   return rows;
+}
+
+async function getProductById(id) {
+  const { rows } = await pool.query('SELECT * FROM products WHERE id = $1', [
+    id,
+  ]);
+  return rows[0];
 }
 
 async function getProductCategory(id) {
@@ -74,7 +97,8 @@ export default {
   getCategory,
   postCategory,
   getProducts,
-  getProduct,
+  getProductByName,
+  getProductById,
   postProduct,
   getProductCategory,
   getProductColor,
