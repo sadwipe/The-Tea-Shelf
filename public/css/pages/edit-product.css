@@ -1,0 +1,129 @@
+.container > a {
+  font-size: var(--header-font-size);
+  background-color: var(--header-button-bg);
+  color: var(--header-button-color);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.container > a:hover {
+  background-color: rgb(30, 137, 58);
+  color: white;
+}
+
+.edit-product-container {
+  border: 0.5px solid rgb(201, 201, 201);
+  border-radius: 1rem;
+  margin-top: 30px;
+  padding: 2rem;
+}
+
+.product-content {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.product-content > img {
+  width: 30vw;
+  max-width: 300px;
+  border-radius: 1rem;
+}
+
+.product-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-category {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-header > h3 {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.product-header > p {
+  font-size: 2rem;
+}
+
+.product-quantity {
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+
+.product-buttons {
+  display: flex;
+  width: fit-content;
+  margin-left: auto;
+  gap: 10px;
+}
+
+#submit-edit {
+  font-size: var(--header-font-size);
+  background-color: var(--header-button-bg);
+  color: var(--header-button-color);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-family: var(--main-font);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#submit-edit {
+  margin-top: 20px;
+}
+
+div > input {
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  font-size: 1.25rem;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  width: 6ch;
+}
+
+#price {
+  width: 4ch;
+}
+
+select {
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  font-size: 1.25rem;
+}
+
+label {
+  font-size: 1.25rem;
+}

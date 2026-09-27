@@ -64,7 +64,17 @@ const validateProduct = [
 
   body('stock')
     .isInt({ min: 1, max: 100000 })
-    .withMessage('The price must be between 1 and 100000.'),
+    .withMessage('The stock must be between 1 and 100000.'),
+];
+
+const validateEditProduct = [
+  body('price')
+    .isFloat({ min: 1, max: 1000 })
+    .withMessage('The price must be between 1 and 1000.'),
+
+  body('stock')
+    .isInt({ min: 1, max: 100000 })
+    .withMessage('The stock must be between 1 and 100000.'),
 ];
 
 // Wrapper for catching errors thrown by multer
@@ -126,11 +136,62 @@ const postNewProduct = [
   },
 ];
 
+const editProduct = [
+  validateEditProduct,
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    const productId = req.params.productId;
+
+    if (!errors.isEmpty()) {
+      const categories = await db.getCategories();
+      const product = await db.getProductById(productId);
+
+      return res
+        .status(400)
+        .render('pages/edit-product', {
+          product,
+          getContrastColor,
+          categories,
+          errors: errors.array(),
+        });
+    }
+
+    const { price, stock } = matchedData(req);
+
+    const category = req.body.category;
+    const categoryId = await db.getCategoryIdByName(category);
+
+    await db.updateProduct(productId, { categoryId, price, stock });
+
+    res.redirect(`/products/${productId}`);
+  },
+];
+
 async function getProduct(req, res) {
   const { productId } = req.params;
   const product = await db.getProductById(productId);
-  console.log(product);
-  res.send('hello');
+  res.render('pages/product-details', {
+    product,
+    getContrastColor,
+  });
+}
+
+async function deleteProduct(req, res) {
+  const { productId } = req.params;
+  await db.deleteProduct(productId);
+  res.redirect('/products');
+}
+
+async function getEditProduct(req, res) {
+  const { productId } = req.params;
+  const product = await db.getProductById(productId);
+  const categories = await db.getCategories();
+  res.render('pages/edit-product', {
+    product,
+    getContrastColor,
+    categories,
+  });
 }
 
 export default {
@@ -139,4 +200,7 @@ export default {
   getNewProductsForm,
   postNewProduct,
   getProduct,
+  deleteProduct,
+  getEditProduct,
+  editProduct,
 };

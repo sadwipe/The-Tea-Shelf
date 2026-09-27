@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head', { title: product.name, pageCss: '/css/pages/product-details.css' }) %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
+    <div class="container">
+      <a href="/products">&lt&lt Return to Products</a>
+      <div class="view-product-container">
+        <div class="product-content">
+          <img src="<%= product.image_url %>" alt="<%= product.name %>">
+          <div class="product-text">
+            <div class="product-header">
+              <h3><%= product.name %></h3>
+              <p>$<%= Math.round(product.price, 2) %></p>
+            </div>
+            <p style="background-color: #<%= product.backgroundColor %>; color: <%= getContrastColor(product.backgroundColor) %> " class="product-category">
+              <%= product.category %>
+            </p>
+            <p class="product-quantity">
+              Quantity: <%= product.stock %>
+            </p>
+          </div>
+        </div>
+        <div class="product-buttons">
+          <form action="/products/edit/<%= product.id %>" method="GET">
+            <button id="edit-product-button" type="submit">Edit</button>
+          </form>
+          <form action="/products/delete/<%= product.id %>" method="POST">
+            <button id="delete-product-button" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>

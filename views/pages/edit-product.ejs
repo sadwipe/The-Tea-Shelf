@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head', { title: `Edit ${product.name}`, pageCss: '/css/pages/edit-product.css' }) %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <main>
+    <div class="container">
+      <a href="/products/<%= product.id %>">&lt&lt Return to <%= product.name %></a>
+      <div class="edit-product-container">
+        <form action="/products/edit/<%= product.id %>" method="POST">
+          <div class="product-content">
+            <img src="<%= product.image_url %>" alt="<%= product.name %>">
+            <div class="product-text">
+              <div class="product-header">
+                <h3><%= product.name %></h3>
+                <div class="edit-price">
+                  <label for="price">$</label>
+                  <input required name="price" id="price" type="number" value="<%= Math.round(product.price, 2) %>">
+                </div>
+              </div>
+              <div class="edit-category">
+                <label for="category">Category: </label>
+                <select name="category" id="category">
+                  <% categories.forEach(category => { %>
+                    <option value="<%= category.name %>"><%= category.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="edit-quantity">
+                <label for="stock">Quantity: </label>
+                <input required name="stock" type="number" value="<%= product.stock %>">
+              </div>
+              <% if(locals.errors && locals.errors.length !== 0) { %>
+                <ul>
+                  <% locals.errors.map(error => { %>
+                    <li style="color: red; list-style: none;"><%= error.msg %></li>
+                  <% }) %>
+                </ul>
+              <% } %>
+            </div>
+          </div>
+          <button id="submit-edit" type="submit">Submit edits</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <%- include('../partials/footer') %>
+</body>
+</html>
