@@ -120,8 +120,8 @@ async function getProductColor(id) {
 // POST Products
 async function postProduct(product) {
   const SQL = `
-    INSERT INTO products (category_id, name, price, stock, image_url)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO products (category_id, name, description, price, stock, image_url)
+    VALUES ($1, $2, $3, $4, $5, $6)
   `;
 
   const categoryId = await getCategoryIdByName(product.category);
@@ -129,6 +129,7 @@ async function postProduct(product) {
   await pool.query(SQL, [
     categoryId,
     product.name,
+    product.description,
     product.price,
     product.stock,
     product.image_url,
@@ -145,17 +146,18 @@ async function deleteProduct(productId) {
 }
 
 async function updateProduct(productId, updates) {
-  const { categoryId, price, stock } = updates;
+  const { categoryId, price, stock, description } = updates;
 
   const SQL = `
     UPDATE products
     SET category_id = $1,
-        price = $2,
-        stock = $3
-    WHERE id = $4
+        description = $2,
+        price = $3,
+        stock = $4
+    WHERE id = $5
   `;
 
-  await pool.query(SQL, [categoryId, price, stock, productId]);
+  await pool.query(SQL, [categoryId, description, price, stock, productId]);
 }
 
 export default {

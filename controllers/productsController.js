@@ -35,11 +35,6 @@ async function getProducts(req, res) {
   });
 }
 
-// POST /products
-function postProducts(req, res) {
-  res.send('Post products!');
-}
-
 // GET /products/new
 async function getNewProductsForm(req, res) {
   const categories = await db.getCategories();
@@ -54,9 +49,7 @@ const validateProduct = [
     .matches(/^[A-Za-z ]+$/)
     .withMessage('The product name must only contain letters and spaces.')
     .isLength({ min: 3, max: 30 })
-    .withMessage(
-      'The product name length must be between 3 and 30 characters.',
-    ),
+    .withMessage('Product name must be between 3 and 30 characters.'),
 
   body('price')
     .isFloat({ min: 1, max: 1000 })
@@ -65,12 +58,24 @@ const validateProduct = [
   body('stock')
     .isInt({ min: 1, max: 100000 })
     .withMessage('The stock must be between 1 and 100000.'),
+
+  body('description')
+    .trim()
+    .optional()
+    .isLength({ min: 5, max: 200 })
+    .withMessage('Description must be between 5 and 200 characters.'),
 ];
 
 const validateEditProduct = [
   body('price')
     .isFloat({ min: 1, max: 1000 })
     .withMessage('The price must be between 1 and 1000.'),
+
+  body('description')
+    .trim()
+    .optional()
+    .isLength({ min: 5, max: 200 })
+    .withMessage('Description must be between 5 and 200 characters.'),
 
   body('stock')
     .isInt({ min: 1, max: 100000 })
@@ -106,7 +111,7 @@ const postNewProduct = [
         .render('pages/add-product', { categories, errors: errors.array() });
     }
 
-    const { name, price, stock } = matchedData(req);
+    const { name, price, stock, description } = matchedData(req);
 
     const existingProduct = await db.getProductByName(name);
 
@@ -127,6 +132,7 @@ const postNewProduct = [
       name,
       price,
       stock,
+      description,
       category: req.body.category,
       image_url: imageUrl,
     };
@@ -147,22 +153,25 @@ const editProduct = [
       const categories = await db.getCategories();
       const product = await db.getProductById(productId);
 
-      return res
-        .status(400)
-        .render('pages/edit-product', {
-          product,
-          getContrastColor,
-          categories,
-          errors: errors.array(),
-        });
+      return res.status(400).render('pages/edit-product', {
+        product,
+        getContrastColor,
+        categories,
+        errors: errors.array(),
+      });
     }
 
-    const { price, stock } = matchedData(req);
+    const { price, stock, description } = matchedData(req);
 
     const category = req.body.category;
     const categoryId = await db.getCategoryIdByName(category);
 
-    await db.updateProduct(productId, { categoryId, price, stock });
+    await db.updateProduct(productId, {
+      categoryId,
+      price,
+      stock,
+      description,
+    });
 
     res.redirect(`/products/${productId}`);
   },
@@ -196,7 +205,6 @@ async function getEditProduct(req, res) {
 
 export default {
   getProducts,
-  postProducts,
   getNewProductsForm,
   postNewProduct,
   getProduct,

@@ -16,7 +16,7 @@
         <label for="stock">Stock (in grams):</label>
         <input name="stock" id="stock" type="number" required min="1">
         <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
+        <textarea name="description" id="description" maxlength="200" ></textarea>
         <label for="category">Category:</label>
         <select name="category" id="category">
           <% categories.forEach(category => { %>

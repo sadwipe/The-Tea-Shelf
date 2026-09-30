@@ -32,6 +32,10 @@
                 <label for="stock">Quantity: </label>
                 <input required name="stock" type="number" value="<%= product.stock %>">
               </div>
+              <div class="edit-description">
+                <label for="description">Description: </label>
+                <textarea name="description" id="description" maxlength="200"><%= product.description %></textarea>
+              </div>
               <% if(locals.errors && locals.errors.length !== 0) { %>
                 <ul>
                   <% locals.errors.map(error => { %>

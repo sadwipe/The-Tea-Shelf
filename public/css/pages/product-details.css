@@ -63,9 +63,11 @@
   font-size: 2rem;
 }
 
-.product-quantity {
+.product-quantity,
+.product-description {
   font-size: 1.25rem;
   font-weight: normal;
+  line-height: 1.2;
 }
 
 .product-buttons {

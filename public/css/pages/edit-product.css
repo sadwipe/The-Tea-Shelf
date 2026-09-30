@@ -127,3 +127,19 @@ select {
 label {
   font-size: 1.25rem;
 }
+
+.edit-description {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-description > textarea {
+  resize: none;
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  font-size: 1.25rem;
+  width: 100%;
+}
