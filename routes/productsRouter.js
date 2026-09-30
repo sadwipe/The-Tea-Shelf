@@ -9,6 +9,8 @@ productsRouter.get('/', productsController.getProducts);
 productsRouter.get('/new', productsController.getNewProductsForm);
 productsRouter.post('/new', productsController.postNewProduct);
 
+productsRouter.get('/search', productsController.searchProducts);
+
 productsRouter.get('/:productId', productsController.getProduct);
 
 productsRouter.post('/delete/:productId', productsController.deleteProduct);

@@ -160,6 +160,20 @@ async function updateProduct(productId, updates) {
   await pool.query(SQL, [categoryId, description, price, stock, productId]);
 }
 
+async function searchProducts(query) {
+  const SQL = `
+    SELECT p.*, c.color as "backgroundColor"
+    FROM products p
+    JOIN categories c
+    ON p.category_id = c.id
+    WHERE p.name ILIKE $1
+  `;
+
+  const { rows } = await pool.query(SQL, [`%${query}%`]);
+
+  return rows;
+}
+
 export default {
   getCategories,
   getCategory,
@@ -173,4 +187,5 @@ export default {
   getProductColor,
   deleteProduct,
   updateProduct,
+  searchProducts,
 };

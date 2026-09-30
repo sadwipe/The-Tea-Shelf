@@ -1,4 +1,4 @@
-import { body, validationResult, matchedData } from 'express-validator';
+import { query, body, validationResult, matchedData } from 'express-validator';
 
 import db from '../db/queries.js';
 import { upload } from '../middleware/upload.js';
@@ -66,6 +66,7 @@ const validateProduct = [
     .withMessage('Description must be between 5 and 200 characters.'),
 ];
 
+// Validate POST /edit/:productId
 const validateEditProduct = [
   body('price')
     .isFloat({ min: 1, max: 1000 })
@@ -80,6 +81,16 @@ const validateEditProduct = [
   body('stock')
     .isInt({ min: 1, max: 100000 })
     .withMessage('The stock must be between 1 and 100000.'),
+];
+
+// Validate GET /products/search
+const validateSearch = [
+  query('query')
+    .trim()
+    .matches(/^[A-Za-z ]+$/)
+    .withMessage('The product name must only contain letters and spaces.')
+    .isLength({ min: 2, max: 30 })
+    .withMessage('Search query must be between 2 and 30 characters.'),
 ];
 
 // Wrapper for catching errors thrown by multer
@@ -142,6 +153,7 @@ const postNewProduct = [
   },
 ];
 
+// POST /edit/:productId
 const editProduct = [
   validateEditProduct,
   async (req, res) => {
@@ -177,6 +189,7 @@ const editProduct = [
   },
 ];
 
+// GET /:productId
 async function getProduct(req, res) {
   const { productId } = req.params;
   const product = await db.getProductById(productId);
@@ -186,12 +199,14 @@ async function getProduct(req, res) {
   });
 }
 
+// GET /delete/:productId
 async function deleteProduct(req, res) {
   const { productId } = req.params;
   await db.deleteProduct(productId);
   res.redirect('/products');
 }
 
+// GET /edit/:productId
 async function getEditProduct(req, res) {
   const { productId } = req.params;
   const product = await db.getProductById(productId);
@@ -203,6 +218,30 @@ async function getEditProduct(req, res) {
   });
 }
 
+// GET /search
+const searchProducts = [
+  validateSearch,
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render('pages/search-results', {
+        products: [],
+        errors: errors.array(),
+        query: req.query.query || null,
+      });
+    }
+
+    const { query } = matchedData(req);
+    const products = await db.searchProducts(query);
+    res.render('pages/search-results', {
+      products,
+      getContrastColor,
+      query,
+    });
+  },
+];
+
 export default {
   getProducts,
   getNewProductsForm,
@@ -211,4 +250,5 @@ export default {
   deleteProduct,
   getEditProduct,
   editProduct,
+  searchProducts,
 };

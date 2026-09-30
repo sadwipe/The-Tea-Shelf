@@ -6,7 +6,6 @@ import 'dotenv/config';
 import indexRouter from './routes/indexRouter.js';
 import categoriesRouter from './routes/categoriesRouter.js';
 import productsRouter from './routes/productsRouter.js';
-import searchRouter from './routes/searchRouter.js';
 
 // returns the absolute path of the "app.js" file
 const __filename = fileURLToPath(import.meta.url);
@@ -26,7 +25,6 @@ app.set('view engine', 'ejs');
 app.use('/', indexRouter);
 app.use('/categories', categoriesRouter);
 app.use('/products', productsRouter);
-app.use('/search', searchRouter);
 
 app.use((err, req, res, _next) => {
   console.error(err.stack);
