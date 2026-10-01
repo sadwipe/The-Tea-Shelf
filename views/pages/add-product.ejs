@@ -19,16 +19,16 @@
         <textarea name="description" id="description" maxlength="200" ></textarea>
         <label for="category">Category:</label>
         <select name="category" id="category">
-          <% categories.forEach(category => { %>
-            <option value="<%= category.name %>"><%= category.name %></option>
-          <% }) %>
+        <% categories.forEach(category => { %>
+          <option value="<%= category.name %>"><%= category.name %></option>
+        <% }) %>
         </select>
         <label for="image">Image:</label>
         <input type="file" name="src" accept="image/png, image/jpeg, image/svg+xml">
-        <% if(locals.errors && locals.errors.length !== 0) { %>
+        <% if(locals.errors?.length) { %>
         <ul>
-          <% locals.errors.map(error => { %>
-            <li style="color: red;"><%= error.msg %></li>
+          <% locals.errors.forEach(error => { %>
+            <li style="color: red; margin-bottom: 5px;"><%= error.msg %></li>
           <% }) %>
         </ul>
         <% } %>

@@ -36,6 +36,7 @@
 #add-product > input[type='file'] {
   font-size: 1rem;
   font-family: var(--main-font);
+  margin-bottom: 10px;
 }
 
 #add-product > input[type='number']::-webkit-outer-spin-button,

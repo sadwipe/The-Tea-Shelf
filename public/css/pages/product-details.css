@@ -1,4 +1,5 @@
-.container > a {
+.container > a,
+.not-found-container > a {
   font-size: var(--header-font-size);
   background-color: var(--header-button-bg);
   color: var(--header-button-color);
@@ -13,7 +14,8 @@
   display: inline-block;
 }
 
-.container > a:hover {
+.container > a:hover,
+.not-found-container > a:hover {
   background-color: rgb(30, 137, 58);
   color: white;
 }
@@ -103,4 +105,24 @@
 
 #edit-product-button:hover {
   background-color: rgb(30, 137, 58);
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.not-found-container > h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.not-found-container > p {
+  font-size: 1.25rem;
+  color: #333;
 }

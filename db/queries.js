@@ -73,7 +73,7 @@ async function getProductByName(name) {
   `;
 
   const { rows } = await pool.query(SQL, [name]);
-  return rows;
+  return rows[0] || null;
 }
 
 async function getProductById(id) {
@@ -89,7 +89,7 @@ async function getProductById(id) {
   `;
 
   const { rows } = await pool.query(SQL, [id]);
-  return rows[0];
+  return rows[0] || null;
 }
 
 async function getProductCategory(id) {

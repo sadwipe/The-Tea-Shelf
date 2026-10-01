@@ -36,9 +36,9 @@
                 <label for="description">Description: </label>
                 <textarea name="description" id="description" maxlength="200"><%= product.description %></textarea>
               </div>
-              <% if(locals.errors && locals.errors.length !== 0) { %>
+              <% if(locals.errors?.length) { %>
                 <ul>
-                  <% locals.errors.map(error => { %>
+                  <% locals.errors.forEach(error => { %>
                     <li style="color: red; list-style: none;"><%= error.msg %></li>
                   <% }) %>
                 </ul>

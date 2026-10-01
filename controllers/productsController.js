@@ -38,7 +38,6 @@ async function getProducts(req, res) {
 // GET /products/new
 async function getNewProductsForm(req, res) {
   const categories = await db.getCategories();
-
   res.render('pages/add-product', { categories });
 }
 
@@ -64,33 +63,6 @@ const validateProduct = [
     .optional()
     .isLength({ min: 5, max: 200 })
     .withMessage('Description must be between 5 and 200 characters.'),
-];
-
-// Validate POST /edit/:productId
-const validateEditProduct = [
-  body('price')
-    .isFloat({ min: 1, max: 1000 })
-    .withMessage('The price must be between 1 and 1000.'),
-
-  body('description')
-    .trim()
-    .optional()
-    .isLength({ min: 5, max: 200 })
-    .withMessage('Description must be between 5 and 200 characters.'),
-
-  body('stock')
-    .isInt({ min: 1, max: 100000 })
-    .withMessage('The stock must be between 1 and 100000.'),
-];
-
-// Validate GET /products/search
-const validateSearch = [
-  query('query')
-    .trim()
-    .matches(/^[A-Za-z ]+$/)
-    .withMessage('The product name must only contain letters and spaces.')
-    .isLength({ min: 2, max: 30 })
-    .withMessage('Search query must be between 2 and 30 characters.'),
 ];
 
 // Wrapper for catching errors thrown by multer
@@ -126,7 +98,7 @@ const postNewProduct = [
 
     const existingProduct = await db.getProductByName(name);
 
-    if (existingProduct.length !== 0) {
+    if (existingProduct) {
       const categories = await db.getCategories();
 
       return res.status(400).render('pages/add-product', {
@@ -153,6 +125,23 @@ const postNewProduct = [
   },
 ];
 
+// Validate POST /edit/:productId
+const validateEditProduct = [
+  body('price')
+    .isFloat({ min: 1, max: 1000 })
+    .withMessage('The price must be between 1 and 1000.'),
+
+  body('description')
+    .trim()
+    .optional()
+    .isLength({ min: 5, max: 200 })
+    .withMessage('Description must be between 5 and 200 characters.'),
+
+  body('stock')
+    .isInt({ min: 1, max: 100000 })
+    .withMessage('The stock must be between 1 and 100000.'),
+];
+
 // POST /edit/:productId
 const editProduct = [
   validateEditProduct,
@@ -162,8 +151,10 @@ const editProduct = [
     const productId = req.params.productId;
 
     if (!errors.isEmpty()) {
-      const categories = await db.getCategories();
-      const product = await db.getProductById(productId);
+      const [categories, product] = await Promise.all([
+        db.getCategories(),
+        db.getProductById(productId),
+      ]);
 
       return res.status(400).render('pages/edit-product', {
         product,
@@ -192,14 +183,24 @@ const editProduct = [
 // GET /:productId
 async function getProduct(req, res) {
   const { productId } = req.params;
+
+  if (!/^\d+$/.test(productId)) {
+    return res.status(404).render('pages/product-details', {
+      product: null,
+      productId,
+    });
+  }
+
   const product = await db.getProductById(productId);
+
   res.render('pages/product-details', {
     product,
     getContrastColor,
+    productId,
   });
 }
 
-// GET /delete/:productId
+// POST /delete/:productId
 async function deleteProduct(req, res) {
   const { productId } = req.params;
   await db.deleteProduct(productId);
@@ -209,14 +210,28 @@ async function deleteProduct(req, res) {
 // GET /edit/:productId
 async function getEditProduct(req, res) {
   const { productId } = req.params;
-  const product = await db.getProductById(productId);
-  const categories = await db.getCategories();
+
+  const [categories, product] = await Promise.all([
+    db.getCategories(),
+    db.getProductById(productId),
+  ]);
+
   res.render('pages/edit-product', {
     product,
     getContrastColor,
     categories,
   });
 }
+
+// Validate GET /products/search
+const validateSearch = [
+  query('query')
+    .trim()
+    .matches(/^[A-Za-z ]+$/)
+    .withMessage('The product name must only contain letters and spaces.')
+    .isLength({ min: 2, max: 30 })
+    .withMessage('Search query must be between 2 and 30 characters.'),
+];
 
 // GET /search
 const searchProducts = [
@@ -226,14 +241,14 @@ const searchProducts = [
 
     if (!errors.isEmpty()) {
       return res.status(400).render('pages/search-results', {
-        products: [],
         errors: errors.array(),
-        query: req.query.query || null,
+        query: req.query.query,
       });
     }
 
     const { query } = matchedData(req);
     const products = await db.searchProducts(query);
+
     res.render('pages/search-results', {
       products,
       getContrastColor,

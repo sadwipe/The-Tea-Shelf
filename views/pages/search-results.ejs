@@ -13,10 +13,10 @@
           for '<%= locals.query %>'
         <% } %>
       </h2>
-      <a href="/products">&lt&lt Return to Products</a>
-      <% if(locals.errors && locals.errors.length !== 0) { %>
+      <a href="/products">&lt;&lt; Return to Products</a>
+      <% if(locals.errors?.length) { %>
         <ul>
-          <% locals.errors.map(error => { %>
+          <% locals.errors.forEach(error => { %>
             <li style="color: red; margin-bottom: 5px;"><%= error.msg %></li>
           <% }) %>
         </ul>
@@ -30,7 +30,7 @@
                 <div class="card-info">
                   <div class="name-price">
                     <p class="card-name"><%= product.name %></p>
-                    <p class="card-price">$<%= Math.round(product.price, 2) %></p>
+                    <p class="card-price">$<%= Number(product.price).toFixed(2) %></p>
                   </div>
                   <div class="card-quantity">Quantity: <%= product.stock %>g</div>
                   <div style="background-color: #<%= product.backgroundColor %>; color: <%= getContrastColor(product.backgroundColor) %>" class="product-category"><%= product.category %></div>
