@@ -3,7 +3,7 @@ import pool from './pool.js';
 // GET Categories
 async function getCategories() {
   const SQL = `
-    SELECT *
+    SELECT name, color
     FROM categories
   `;
 

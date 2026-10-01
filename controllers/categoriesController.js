@@ -6,20 +6,12 @@ import { getContrastColor } from '../utils/utils.js';
 // GET /categories
 async function getCategories(req, res) {
   const categories = await db.getCategories();
-
-  if (categories.length === 0) {
-    return res.render('pages/categories', {
-      categories,
-      info: 'There are no categories available.',
-    });
-  }
-
   res.render('pages/categories', { categories, getContrastColor });
 }
 
 // GET /categories/new
 function getNewCategoriesForm(req, res) {
-  res.render('pages/add-category', { errors: [] });
+  res.render('pages/add-category');
 }
 
 // Validate POST /categories/new
