@@ -4,6 +4,8 @@ An inventory management web application for tracking tea products and
 categories. The application provides CRUD functionality, server-side data
 validation, file uploads for product images, and PostgreSQL persistence.
 
+![The Tea Shelf Preview](./public/images/preview.png)
+
 ## Features
 
 - Manage tea categories and products with categorized views.
